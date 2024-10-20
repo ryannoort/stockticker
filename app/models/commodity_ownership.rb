@@ -5,5 +5,5 @@ class CommodityOwnership < ApplicationRecord
   validates :commodity_id, uniqueness: { scope: :user_id }
   validates :user_id, presence: true
   validates :commodity_id, presence: true
-  validates :quantity, presence: true, numericality: { greater_than: 0 }
+  validates :quantity, presence: true, numericality: { greater_than_eq: 0 }
 end

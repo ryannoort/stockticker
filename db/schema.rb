@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_19_200630) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_20_022347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,6 +30,19 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_19_200630) do
     t.datetime "updated_at", null: false
     t.index ["commodity_id"], name: "index_commodity_ownerships_on_commodity_id"
     t.index ["user_id"], name: "index_commodity_ownerships_on_user_id"
+    t.check_constraint "quantity >= 0", name: "quantity_check"
+  end
+
+  create_table "commodity_transactions", force: :cascade do |t|
+    t.bigint "commodity_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "quantity", null: false
+    t.integer "price", null: false
+    t.string "transaction_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commodity_id"], name: "index_commodity_transactions_on_commodity_id"
+    t.index ["user_id"], name: "index_commodity_transactions_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -51,5 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_19_200630) do
 
   add_foreign_key "commodity_ownerships", "commodities"
   add_foreign_key "commodity_ownerships", "users"
+  add_foreign_key "commodity_transactions", "commodities"
+  add_foreign_key "commodity_transactions", "users"
   add_foreign_key "sessions", "users"
 end
