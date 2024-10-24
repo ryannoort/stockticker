@@ -34,8 +34,7 @@ module CommodityTransactions
     end
 
     def update_commodity_ownership
-      ownership = user.commodity_ownerships.find_by!(commodity: commodity)
-      ownership.decrement!(:quantity, quantity)
+
     end
   end
 end

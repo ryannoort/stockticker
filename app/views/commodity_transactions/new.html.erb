@@ -1,0 +1,11 @@
+<%= form_with model: [@commodity, @commodity_transaction] do |f| %>
+  <%= f.hidden_field :transaction_type %>
+
+  <%= f.number_field :quantity,
+    step: 1,
+    min: 1,
+    required: true
+  %>
+
+  <%= f.submit %>
+<% end %>

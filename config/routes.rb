@@ -14,5 +14,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "dashboard#show"
 
-  resources :commodities, only: %i[index show]
+  resources :commodities, only: %i[index show] do
+    get "/purchase", on: :member, to: "commodity_transactions#new", defaults: { transaction_type: CommodityTransaction::TYPE_PURCHASE }
+    get "/sell", on: :member, to: "commodity_transactions#new", defaults: { transaction_type: CommodityTransaction::TYPE_SALE }
+
+    resources :commodity_transactions, only: %i[create]
+  end
 end
