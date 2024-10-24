@@ -1,3 +1,5 @@
 class DashboardController < ApplicationController
-  def index; end
+  def show
+    @commodity_ownerships = Current.user.commodity_ownerships
+  end
 end

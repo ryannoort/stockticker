@@ -1,1 +1,17 @@
-<%= render "commodities/index" %>
+<div class="bg-white rounded-xl shadow">
+  <h3>
+    My Assets
+  </h3>
+
+  <div class="flex flex-col gap-2">
+    <% @commodity_ownerships.each do |commodity_ownership| %>
+      <div class="flex justify-between">
+        <div>
+          <%= commodity_ownership.commodity.name %>
+        </div>
+        <div>
+          <%= commodity_ownership.quantity %>
+        </div>
+      </div>
+    <% end %>
+  </div>
