@@ -1,17 +1,46 @@
-<div class="bg-white rounded-xl shadow">
-  <h3>
-    My Assets
-  </h3>
+<div class="bg-white rounded-xl shadow-xl p-5 pb-0 w-full">
+  <div class="flex justify-between text-xl font-semibold">
+    <span>
+      My Assets
+    </span>
+    <span>
+      <%= number_to_currency @commodity_ownerships.sum(&:total_value) %>
+    </span>
+  </div>
 
-  <div class="flex flex-col gap-2">
+  <div class="mt-5 flex flex-col gap-2 divide-y divide-slate-300 border-t border-slate-300 -mx-5 px-5 pb-2">
     <% @commodity_ownerships.each do |commodity_ownership| %>
-      <div class="flex justify-between">
-        <div>
+      <%= link_to commodity_path(commodity_ownership.commodity), class: "flex justify-between py-2 -mx-5 px-5" do %>
+        <div class="my-auto">
           <%= commodity_ownership.commodity.name %>
         </div>
-        <div>
-          <%= commodity_ownership.quantity %>
+        <div class="flex flex-col">
+          <div class="text-end text-lg">
+            <%= number_to_currency commodity_ownership.total_value %>
+          </div>
+          <div class="text-end text-sm font-light">
+            <%= number_to_currency commodity_ownership.commodity.price %> * <%= commodity_ownership.quantity %>
+          </div>
         </div>
-      </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-xl p-5 pb-0 w-full">
+  <span class="text-xl font-semibold">
+    Commodities Prices
+  </span>
+
+  <div class="mt-5 flex flex-col gap-2 divide-y divide-slate-300 border-t border-slate-300 -mx-5 px-5 pb-2">
+    <% @commodities.each do |commodity| %>
+      <%= link_to commodity_path(commodity), class: "flex justify-between py-2 -mx-5 px-5" do %>
+        <div class="my-auto">
+          <%= commodity.name %>
+        </div>
+        <div class="text-end">
+          <%= number_to_currency commodity.price %>
+        </div>
+      <% end %>
     <% end %>
   </div>

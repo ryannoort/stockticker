@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   root "dashboard#show"
 
   resources :commodities, only: %i[index show] do
-    get "/purchase", on: :member, to: "commodity_transactions#new", defaults: { transaction_type: CommodityTransaction::TYPE_PURCHASE }
-    get "/sell", on: :member, to: "commodity_transactions#new", defaults: { transaction_type: CommodityTransaction::TYPE_SALE }
+    get "/purchase", on: :member, to: "commodity_transactions#new", defaults: { transaction_type: CommodityTransaction::TYPE_PURCHASE }, as: :purchase
+    get "/sell", on: :member, to: "commodity_transactions#new", defaults: { transaction_type: CommodityTransaction::TYPE_SALE }, as: :sell
 
     resources :commodity_transactions, only: %i[create]
   end

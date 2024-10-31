@@ -1,8 +1,0 @@
-<div class="flex flex-col gap-2">
-  <% Commodity.all.find_each do |commodity| %>
-    <div class="flex justify-between">
-      <span><%= link_to commodity.name, commodity_path(commodity) %></span>
-      <span><%= number_to_currency(commodity.price) %></span>
-    </div>
-  <% end %>
-</div>

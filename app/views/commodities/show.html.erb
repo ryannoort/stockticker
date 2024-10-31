@@ -1,6 +1,23 @@
-<div>
-  <%= @commodity.name %>
-</div>
-<div>
-  <%= number_to_currency(@commodity.price) %>
+<div class="bg-white rounded-xl flex flex-col w-full p-8">
+  <div class="flex justify-end">
+    <%= link_to "Buy", purchase_commodity_path(@commodity) %>
+  </div>
+
+  <div class="flex justify-between">
+    <div>
+      <%= @commodity.name %>
+    </div>
+    <div>
+      <%= number_to_currency(@commodity.price) %>
+    </div>
+  </div>
+
+  <div class="flex justify-between">
+    <div>
+      You own: <%= @commodity_owned %>
+    </div>
+    <div>
+      <%= number_to_currency(@commodity_owned * @commodity.price)  %>
+    </div>
+  </div>
 </div>

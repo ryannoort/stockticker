@@ -6,4 +6,9 @@ class CommodityOwnership < ApplicationRecord
   validates :user_id, presence: true
   validates :commodity_id, presence: true
   validates :quantity, presence: true, numericality: { greater_than_eq: 0 }
+
+  scope :with_total_value, -> {
+    select("commodity_ownerships.*, (commodity_ownerships.quantity * commodities.price) as total_value").
+      joins(:commodity)
+  }
 end
