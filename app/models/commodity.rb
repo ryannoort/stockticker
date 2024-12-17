@@ -4,7 +4,7 @@ class Commodity < ApplicationRecord
   has_many :commodity_adjustments, dependent: :destroy
 
   def adjust_price(price_change)
-    transaction(lock: true) do
+    transaction do
       self.price += price_change
       commodity_adjustments.create!(price_change: price_change)
 
