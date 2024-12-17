@@ -82,6 +82,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    port: 5432
     database: stockticker_production
     username: stockticker
     password: <%= ENV["STOCKTICKER_DATABASE_PASSWORD"] %>
