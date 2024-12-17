@@ -87,13 +87,14 @@ builder:
 # Use a different ssh user than root
 ssh:
   user: ryan
+  keys: [ "~/.ssh/stockticker_rsa" ]
 
 # Use accessory services (secrets come from .kamal/secrets).
 accessories:
   db:
     image: postgres:17
     host: ryannoort.com
-    port: "127.0.0.1:8008"
+    port: "127.0.0.1:8008:8008"
     env:
       clear:
         POSTGRES_USER: stockticker
