@@ -5,8 +5,20 @@ class Commodity < ApplicationRecord
 
   def adjust_price(price_change)
     transaction do
-      update!(price: price + price_change)
+      self.price += price_change
       commodity_adjustments.create!(price_change: price_change)
+
+      if self.price <= 0
+        Rails.logger.info "Price of #{name} is negative"
+        commodity_ownerships.each do |ownership|
+          ownership.destroy!
+        end
+
+        self.price = 100
+      end
+
+      save!
     end
   end
 end
+

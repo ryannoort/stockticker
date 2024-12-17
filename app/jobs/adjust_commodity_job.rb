@@ -1,6 +1,6 @@
 class AdjustCommodityJob < ApplicationJob
   def perform
-    commodity = Commodity.all.sample
+    commodity = Commodity.order("RANDOM()").first
     event = [:up, :down, :dividend].sample
     price_change = [5, 10, 20].sample
 
