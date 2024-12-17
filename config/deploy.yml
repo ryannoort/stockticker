@@ -2,12 +2,12 @@
 service: stockticker
 
 # Name of the container image.
-image: your-user/stockticker
+image: ryannoort/stockticker
 
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.0.1
+    - ryannoort.com
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -17,22 +17,22 @@ servers:
 # Set ssl: false if using something like Cloudflare to terminate SSL (but keep host!).
 proxy:
   ssl: true
-  host: app.example.com
+  host: stockticker.ryannoort.com
 
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: your-user
-
+  username: ryannoort
   # Always use an access token rather than real password when possible.
   password:
-    - KAMAL_REGISTRY_PASSWORD
+    - DOCKER_PASSWORD
 
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 env:
   secret:
     - RAILS_MASTER_KEY
+    - STOCKTICKER_DATABASE_PASSWORD
   clear:
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
@@ -45,7 +45,7 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Match this to any external database server to configure Active Record correctly
-    # DB_HOST: 192.168.0.2
+    DB_HOST: stockticker-db
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
@@ -85,28 +85,22 @@ builder:
   #   - RAILS_MASTER_KEY
 
 # Use a different ssh user than root
-# ssh:
-#   user: app
+ssh:
+  user: ryan
 
 # Use accessory services (secrets come from .kamal/secrets).
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     port: 3306
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: redis:7.0
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+accessories:
+  db:
+    image: postgres:17
+    host: ryannoort.com
+    port: "127.0.0.1:8008"
+    env:
+      clear:
+        POSTGRES_USER: stockticker
+        POSTGRES_DB: stockticker_production
+      secret:
+        - STOCKTICKER_DATABASE_PASSWORD
+    files:
+      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
+    directories:
+      - data:/var/lib/postgresql/data

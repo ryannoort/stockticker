@@ -1,0 +1,4 @@
+CREATE DATABASE stockticker_production;
+CREATE DATABASE stockticker_production_cache;
+CREATE DATABASE stockticker_production_queue;
+CREATE DATABASE stockticker_production_cable;
