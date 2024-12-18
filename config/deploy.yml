@@ -17,7 +17,8 @@ servers:
 # Set ssl: false if using something like Cloudflare to terminate SSL (but keep host!).
 proxy:
   ssl: true
-  host: stockticker.ryannoort.com
+  hosts:
+    - stockticker.ryannoort.com
   app_port: 3000
 
 # Credentials for your image host.
@@ -49,7 +50,7 @@ env:
     DB_HOST: stockticker-db
 
     # Log everything from Rails
-    # RAILS_LOG_LEVEL: debug
+    RAILS_LOG_LEVEL: debug
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
