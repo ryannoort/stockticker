@@ -48,7 +48,7 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Match this to any external database server to configure Active Record correctly
-    DB_HOST: stockticker-db
+    # DB_HOST: stockticker-db
 
     # Log everything from Rails
     RAILS_LOG_LEVEL: debug
@@ -90,21 +90,3 @@ builder:
 # Use a different ssh user than root
 ssh:
   user: ryan
-
-# Use accessory services (secrets come from .kamal/secrets).
-accessories:
-  db:
-    image: postgres:17.0
-    roles:
-      - web
-    port: 5432
-    env:
-      clear:
-        POSTGRES_USER: stockticker
-        POSTGRES_DB: stockticker_production
-      secret:
-        - POSTGRES_PASSWORD
-    files:
-      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-    directories:
-      - data:/var/lib/postgresql/data

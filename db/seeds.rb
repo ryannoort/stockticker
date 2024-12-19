@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.find_or_initialize_by(email_address: "ryan@test.com").update(password: "password")
+User.find_or_initialize_by(email: "ryan@test.com").update(password: "password")
 
 %w[Gold Silver Oil Bonds Industry Grain].each do |name|
   Commodity.find_or_create_by!(name: name, price: 100)
